@@ -1,0 +1,227 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    background-image: url("../img/imagemDeFundo/cblol2.jpg");
+    background-size: cover;
+}
+
+/* /////////////// HEADER /////////////// */
+
+.navbar 
+{
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 4vh;
+    box-shadow: 0px 3px 10px;
+    background-color: white;
+    z-index: 999;
+    margin: 0;
+}
+
+.opcoes 
+{
+    text-decoration: none;
+    font-size: 2vh;
+    margin: 10px;
+    color: black;
+}
+
+.opcoes:hover
+{
+    color: gray;
+}
+
+.cadastrar
+{
+    text-decoration: none;
+    font-size: 2.2vh;
+    margin: 5px;
+    color: black;
+}
+
+.pags 
+{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-right: 1vw;
+}
+
+#CBLOL
+{
+    background-image: linear-gradient(50deg, red, blue);
+    font-weight: 900;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 3vh;
+    margin-left: 1vw;
+}
+
+#CBLOL:hover
+{
+    transform: scale(0.9);
+    transition: 0.5s;
+}
+
+/* /////////////// MAIN /////////////// */
+
+main
+{
+    padding-top: 5.3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgUser
+{
+    height: fit-content;
+    width: 20vw;
+    border-radius: 100%;
+    position: relative;
+}
+
+.fraseCadastrar
+{
+    position: relative;
+    bottom:5vh;
+}
+
+
+#flImage
+{
+    position: relative;
+    display: none;
+
+}
+
+.card
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55vw;
+    height: 93vh;
+    background-color: rgba(255, 255, 255, 0.920);
+    
+}
+
+.card-body
+{
+    display: contents;
+    justify-content: center;
+}
+
+.card-img-top
+{
+    display: flex;
+    justify-items: center;
+    height: 13vh;
+    width: fit-content;
+    border-radius: 100%;
+    margin-bottom: 10px;
+}
+
+#inputNome
+{
+    border-color: #000;
+}
+
+#inputQntJogadores
+{
+    border-color: black;
+}
+
+
+/* botao liquido */
+
+.botao_liquido
+{
+    position:relative;
+    top: 2vh;
+    left: 3.2vw;
+    padding: 2vh 5vw;
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 7vw;
+    height: fit-content;
+    overflow: hidden;
+    border-radius: 40px;
+}
+
+.botao_liquido span
+{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 1vw;
+    font-family: Arial;
+    letter-spacing: 2px;
+    z-index: 1;
+}
+
+.botao_liquido .liquid
+{
+    position: absolute;
+    top: -80px;
+    left: 0;
+    width: 200px;
+    height: 200px;
+    background: #4973ff;
+    box-shadow: inset 0 0 50px rgba(0,0,0, .5);
+    transition: .5s;
+}
+.botao_liquido .liquid::after,
+.botao_liquido .liquid::before
+{
+    content:'';
+    width: 200%;
+    height: 200%;
+    position:absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    background: #000;
+}
+
+.botao_liquido .liquid::before
+{
+    border-radius: 45%;
+    background: rgba(20,20,20,1);
+    animation: animate 5s linear infinite;
+}
+
+.botao_liquido .liquid::after
+{
+    border-radius: 40%;
+    background: rgba(20,20,20,.5);
+    animation: animate 10s linear infinite;
+}
+
+.botao_liquido:hover .liquid
+{
+    top: -120px
+}
+
+@keyframes animate
+{
+    0%
+    {
+        transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100%
+    {
+        transform: translate(-50%, -75%) rotate(360deg);
+    }
+}
+.editar
+{
+    border-radius: 35%;
+}
