@@ -7,23 +7,35 @@ module.exports = {
 
         const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome'] });
 
-        res.render('../views/index', {times, jogadores: '', id: ''});
+        res.render('../views/index', {times, jogadores: '', id: {ID: 0, msg: 'Selecione uma sala.'}});
 
     },
 
     async pagInicialPost(req, res){
 
-        
-        const id = req.body.nome;
-
-        const jogadores = await jogador.findAll({
-            raw: true,
-            attributes: ['IDJogador', 'Nome', 'DataNasc', 'Lane', 'Foto'],
-            where: { IDTime: id }
-        });
-
+        const ID = req.body.nome;
         const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome'] });
 
+        let msg, jogadores = '';
+        if (ID == "")
+        {
+            msg = 'Selecione um time.';
+        } 
+        else 
+        {
+            jogadores = await jogador.findAll({
+                raw: true,
+                attributes: ['IDJogador', 'Nome', 'DataNasc', 'Lane', 'Foto'],
+                where: { IDTime: ID }
+            });
+
+            let max = await time.findByPk(ID, { raw: true, attributes: ['Capacidade'] });
+            msg = `Vagas para esse time: ${max.Capacidade - jogadores.length}`;
+
+            
+        };
+
+        const id = { ID, msg };
         res.render('../views/index', {times, jogadores, id});
 
     }

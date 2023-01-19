@@ -1,6 +1,6 @@
 const time = require('../model/time');
 const jogador = require('../model/jogador');
-
+const { Sequelize } = require('sequelize');
 
 module.exports = {
     async time(req, res){
@@ -21,9 +21,33 @@ module.exports = {
     },
 
     async jogador(req, res){
+
         const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome'] });
-        res.render('../views/cadastroJogador', {times});
-    },
+
+        const quantJogadores = await jogador.findAll({
+            raw: true,
+            group: ['IDTime'],
+            attributes: ['IDTime', [Sequelize.fn('count', Sequelize.col('IDTime')), 'Qnt'] ]
+        });
+    
+        let todosTimes = [];
+            for (let i=0; i<times.length; i++ ) {
+                for (let j=0; j<quantJogadores.length; j++ )
+                {
+                    if (times[i].IDTime == quantJogadores[j].IDTime) 
+                    {
+                        times[i].Capacidade -= quantJogadores[j].Qnt;
+                    }
+                }
+
+                if (times[i].Capacidade != 0)
+                {
+                    todosTimes.push(times[i]);
+                }
+            }
+
+            res.render('../views/cadastroJogador', {todosTimes});
+    },        
 
     async jogadorInsert(req, res){
 

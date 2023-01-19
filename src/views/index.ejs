@@ -41,14 +41,24 @@
 
                     <select id="time" onchange="this.form.submit()" name="nome">
                         <option value=''>Selecione um time</option>
+
                         <% for (let i=0; i<times.length; i++) { %>
-                        <option value='<%= times[i].IDTime %>' <%= id == times[i].IDTime ? 'selected' : ''%>> <%= times[i].Nome %> </option>
+                            <option value='<%= times[i].IDTime %>' <%= id.ID == times[i].IDTime ? 'selected' : ''%>> <%= times[i].Nome %> </option>
                         <% } %>
+
                     </select>
+
+                    <% if (id.ID != "") { %>
+                        <a class="btn btn-secondary" href="/editarTimes/<%= id.ID %>">Editar</a>
+                    <% } %>
+
                 </div>
             </form>
         
-
+        <div class="alert vagas" role="alert">
+            <%= id.msg %>
+        </div>
+        
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
             <% for (let i=0; i<jogadores.length; i++) { %>
@@ -59,7 +69,6 @@
                         <div class="card-body">
                             <h5 class="card-name"><%= jogadores[i].Nome %></h5>
                             <h6 class="card-age"><%= jogadores[i].DataNasc %></h6>
-                        
                             <form action="/editarJogadores/<%= jogadores[i].IDJogador %>" method="get">
                                 <button class="botao_liquido" type="submit">
                                     <a href="#">
@@ -74,6 +83,8 @@
 
             <% } %>
         </div>
+
+        
 
     </main>
 

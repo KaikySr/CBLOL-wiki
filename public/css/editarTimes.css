@@ -3,12 +3,12 @@ body
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-image: url("../img/imagemDeFundo/dragoes_lol.jpg");
+    width: 100%;
+    background-image: url("../img/imagemDeFundo/cblol2.jpg");
     background-size: cover;
 }
 
 /* /////////////// HEADER /////////////// */
-
 
 .navbar 
 {
@@ -53,7 +53,7 @@ body
 
 #CBLOL
 {
-    background-image: linear-gradient(82deg, red, blue);
+    background-image: linear-gradient(50deg, red, blue);
     font-weight: 900;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -71,37 +71,32 @@ body
 
 main
 {
-    position: relative;
     padding-top: 5.3vh;
-    align-items: top;
-}
-
-.row
-{
-    margin: 0 1vw;
-}
-
-.col
-{
-    margin-top: 15px;
-}
-
-.selecionar
-{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.textoTimes
+.imgUser
 {
-    color: white;
-    margin-right: 10px;
+    height: fit-content;
+    width: 20vw;
+    border-radius: 100%;
+    position: relative;
 }
 
-#Time
+.fraseCadastrar
 {
-    border-radius: 1vh;
+    position: relative;
+    bottom:5vh;
+}
+
+
+#flImage
+{
+    position: relative;
+    display: none;
+
 }
 
 .card
@@ -109,7 +104,8 @@ main
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 43vh;
+    width: 55vw;
+    height: 93vh;
     background-color: rgba(255, 255, 255, 0.920);
     
 }
@@ -124,41 +120,36 @@ main
 {
     display: flex;
     justify-items: center;
-    height: 15vh;
+    height: 13vh;
     width: fit-content;
     border-radius: 100%;
     margin-bottom: 10px;
 }
 
-.card h5
-{   
-    font-size: 2vh;
-    display: flex;
-    justify-content: center;
+#inputNome
+{
+    border-color: #000;
 }
 
-.card-position
+#inputQntJogadores
 {
-    height: 9vh;
-    width: fit-content; 
+    border-color: black;
 }
 
-.vagas 
-{
-    color: aliceblue;
-    display: flex;
-    justify-content: center;
-}
-/* Botão editar */
+
+/* botao liquido */
 
 .botao_liquido
 {
-    position: relative;
-    padding: 20px 50px;
+    position:relative;
+    top: 2vh;
+    left: 3.2vw;
+    padding: 2vh 5vw;
     display: block;
     text-decoration: none;
     text-transform: uppercase;
-    width: 170px;
+    width: 7vw;
+    height: fit-content;
     overflow: hidden;
     border-radius: 40px;
 }
@@ -170,7 +161,7 @@ main
     justify-content: center;
     align-items: center;
     color: #fff;
-    font-size: 15px;
+    font-size: 1vw;
     font-family: Arial;
     letter-spacing: 2px;
     z-index: 1;
@@ -234,10 +225,3 @@ main
 {
     border-radius: 35%;
 }
-
-
-
-
-
-
-

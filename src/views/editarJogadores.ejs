@@ -38,10 +38,10 @@
 
             <h2 class="fraseEditar">Editar informações do jogador</h2>
 
-            <form class="formm" action="/cadastroJogador/<%= jogadores.IDJogador %>"" method="post" enctype="multipart/form-data">
+            <form class="formm" action="/editarJogadores/<%= jogadores.IDJogador %>"" method="post" enctype="multipart/form-data">
 
                 <div class="image-container">
-                    <img src="img/<%= jogadores.Foto %>" alt="Selecione uma imagem" id="image">
+                    <img src="/img/<%= jogadores.Foto %>" alt="Selecione uma imagem" id="image">
                 </div>
                 <input type="file" id="flImage" name="foto" accept="image/*">
 
@@ -51,7 +51,6 @@
                         <label for="nome" class="form-label">Nome do Jogador</label>
                         <input type="text" class="form-control" value="<%= jogadores.Nome %>" id="inputNome" name="nome" >
                     </div>
-
                     <div class="mb-3">
                         <label for="dataNasc" class="form-label">Data de Nascimento</label>
                         <input type="date" class="form-control" value="<%= jogadores.DataNasc %>" id="inputData" name="dataNasc" >
@@ -60,27 +59,33 @@
                     <div class="mb-3">
                         <label for="lane" class="form-label">Lane</label>
                         <select style="width: 100%;" name="lane" class="form-select" id="inputLane">
-                            <option value="Top">Top</option>
-                            <option value="Jungle">Jungle</option>
-                            <option value="Mid">Mid</option>
-                            <option value="Sup">Sup</option>
-                            <option value="Adc">Adc</option>
-                            <option value="Técnico">Técnico</option>
+                            <option value="Top" <%= jogadores.Lane == "Top" ?  'selected' : ''%>>Top</option>
+                            <option value="Jungle" <%= jogadores.Lane == "Jungle" ?  'selected' : ''%>>Jungle</option>
+                            <option value="Mid" <%= jogadores.Lane == "Mid" ?  'selected' : ''%>>Mid</option>
+                            <option value="Sup" <%= jogadores.Lane == "Sup" ?  'selected' : ''%>>Sup</option>
+                            <option value="Adc" <%= jogadores.Lane == "Adc" ?  'selected' : ''%>>Adc</option>
+                            <option value="Técnico" <%= jogadores.Lane == "Técnico" ?  'selected' : ''%>>Técnico</option>
                         </select>
                     </div>
                     <div class="escolhaTime">
                         <label for="time" class="form-label">Time do Jogador</label>
 
                         <select style="width: 100%;" id="inputTime" class="form-select" name="time" >
-                            <% for (let i=0; i<times.length; i++) { %>
-                            <option value='<%= times[i].IDTime %>'> <%= jogadores.IDTime == times[i].IDTime ? 'selected' : ''%> <%= times[i].Nome %> </option>
+                            <% for (let i=0; i<todosTimes.length; i++) { %>
+                            <option value='<%= todosTimes[i].IDTime %>' <%= jogadores.IDTime == todosTimes[i].IDTime ?  'selected' : ''%>> <%= todosTimes[i].Nome %> </option>
                             <% } %>
                         </select>
                     </div>
 
-                    <button class="botao_liquido" type="submit">
+                    <button class="botao_liquido" type="submit" id="submit">
                         <a href="#">
                             <span>Atualizar</span>
+                            <div class="liquid"></div>
+                        </a>
+                    </button>
+                    <button class="botao_liquido" type="submit" id="excluir" value="Excluir">
+                        <a href="#">
+                            <span>Excluir</span>
                             <div class="liquid"></div>
                         </a>
                     </button>

@@ -2,55 +2,66 @@
 // Importando as tabelas do DB
 const jogador = require('../model/jogador');
 const time = require('../model/time');
+const { Sequelize } = require('sequelize');
 
 // Utilizado para excluir arquivos
 const fs = require('fs');
 
 module.exports = {
-    async jogadores(req, res){
+    async jogador(req, res){
 
         // Recebendo o id da URL
         const parametro = req.params.id;
 
-        const jogadores = await jogador.findByPk(parametro, {
-            raw: true, //Retorna os somente os valores de uma tabela, sem os metadados
-            attributes: ['IDJogador', 'Nome', 'DataNasc', 'Lane', 'Foto', 'IDTime']
-        });
+        const jogadores = await jogador.findByPk(parametro, {raw: true, attributes: ['IDJogador', 'Nome', 'DataNasc', 'Lane', 'Foto', 'IDTime']});
 
-        const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome'] });
-        
-        res.render('../views/editarJogadores', {times, jogadores});
+        const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome', 'Capacidade'] });
+
+        const quantJogadores = await jogador.findAll({raw: true, group: ['IDTime'], attributes: ['IDTime', [Sequelize.fn('count', Sequelize.col('IDTime')), 'Qnt'] ]});
+
+        let todosTimes = [];
+        for (let i=0; i<times.length; i++ ) {
+            for (let j=0; j<quantJogadores.length; j++ ){
+                if (times[i].IDSala == quantJogadores[j].IDTime) {
+                    times[i].Capacidade -= quantJogadores[j].Qnt;
+                }
+            }
+            if (times[i].Capacidade!=0 || times[i].IDTime==jogadores.IDTime){
+                todosTimes.push(times[i]);
+            }
+        }
+     
+        res.render('../views/editarJogadores', {todosTimes, jogadores});
 
     },
 
-    async adicionar(req, res){
+    async jogadorUpdate(req, res){
 
         const dados = req.body;
         const id = req.params.id;
 
+        if (dados.envio == 'Excluir') {
 
-        // Se foi enviado alguma foto
-        if (req.file) {
-
-            // Recebendo a antiga foto do aluno
-            const antigaFoto = await jogador.findAll({
-                raw: true,
-                attributes: ['Foto'],
-                where: { IDJogador: id }
-            });
-
-            // Excluindo a foto da pasta
+            const antigaFoto =  await jogador.findAll({raw: true, attributes: ['Foto'], where: { IDJogador: id } });
             if (antigaFoto[0].Foto != 'NovoUsuario.png') fs.unlink(`public/img/${antigaFoto[0].Foto}`, ( err => { if(err) console.log(err); } ));
 
-            // Update da nova foto no DB
+            await jogador.destroy({ where: { IDJogador: id } });
+            res.redirect('/');
+            return;
+        }
+
+        if (req.file) {
+
+            const antigaFoto =  await jogador.findAll({raw: true, attributes: ['Foto'], where: { IDJogador: id } });
+            if (antigaFoto[0].Foto != 'NovoUsuario.png') fs.unlink(`public/img/${antigaFoto[0].Foto}`, ( err => { if(err) console.log(err); } ));
+            
             await jogador.update(
                 {Foto: req.file.filename},
-                {where: { IDjogador: id }}
+                {where: { IDJogador: id }}
             );
             
         }
 
-        // Dando upgrade nas informações novas
         await jogador.update({
             Nome: dados.nome,
             DataNasc: dados.dataNasc,
@@ -60,8 +71,57 @@ module.exports = {
         {
             where: { IDJogador: id }
         });
+     
+        res.redirect('/');
+    },
+
+    async time(req, res){
+
+        const params = req.params.id;
+     
+        if(params == 0) res.redirect('/');
+
+        const times = await time.findByPk(params);
+
+        res.render('../views/editarTimes', {times});
+     
+    },
+    
+    async timeUpdate(req, res){
+ 
+        const id = req.params.id;
+        const dados = req.body;
+
+        if (dados.envio == 'Excluir') {
+
+            const jogadores = await jogador.findAll({ raw: true, attributes: ['IDJogador', 'Foto'], where: { IDTime: id } });
+
+            for (let i=0; i<jogadores.length; i++) 
+            {
+                const antigaFoto =  await jogador.findAll({raw: true, attributes: ['Foto'], where: { IDJogador: jogadores[i].IDJogador } });
+
+                if (antigaFoto[0].Foto != 'NovoUsuario.png') fs.unlink(`public/img/${antigaFoto[0].Foto}`, ( err => { if(err) console.log(err); } ));
+
+                await jogador.destroy({ where: { IDJogador: jogadores[i].IDJogador } });
+            }
+
+            await time.destroy({ where: { IDTime: id } });
+
+            res.redirect('/');
+            return;
+        }
+
+        await time.update({
+            Nome: dados.nome,
+            Capacidade: dados.qnt
+        },
+        {
+            where: { IDTime: id }
+        });
 
         res.redirect('/');
-        
+     
     }
+
 }
+

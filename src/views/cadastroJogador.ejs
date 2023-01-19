@@ -70,8 +70,8 @@
                         <label for="time" class="form-label">Time do Jogador</label>
 
                         <select style="width: 100%;" id="inputTime" class="form-select" name="time" required>
-                            <% for (let i=0; i<times.length; i++) { %>
-                            <option value='<%= times[i].IDTime %>'> <%= times[i].Nome %> </option>
+                            <% for (let i=0; i<todosTimes.length; i++) { %>
+                            <option value='<%= todosTimes[i].IDTime %>'> <%= todosTimes[i].Nome %> </option>
                             <% } %>
                         </select>
                     </div>
