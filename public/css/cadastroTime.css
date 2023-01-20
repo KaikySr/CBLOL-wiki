@@ -9,7 +9,6 @@ body
 }
 
 /* /////////////// HEADER /////////////// */
-
 .navbar 
 {
     position: fixed;
@@ -20,6 +19,7 @@ body
     background-color: white;
     z-index: 999;
     margin: 0;
+    padding:0;
 }
 
 .opcoes 
@@ -53,12 +53,13 @@ body
 
 #CBLOL
 {
-    background-image: linear-gradient(50deg, red, blue);
+    background-image: linear-gradient(82deg, red, blue);
     font-weight: 900;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 3vh;
     margin-left: 1vw;
+    padding:0;
 }
 
 #CBLOL:hover
@@ -66,6 +67,7 @@ body
     transform: scale(0.9);
     transition: 0.5s;
 }
+
 
 /* /////////////// MAIN /////////////// */
 
@@ -104,7 +106,7 @@ main
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 55vw;
+    width: 45vw;
     height: 93vh;
     background-color: rgba(255, 255, 255, 0.920);
     

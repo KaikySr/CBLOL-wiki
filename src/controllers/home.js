@@ -7,7 +7,7 @@ module.exports = {
 
         const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome'] });
 
-        res.render('../views/index', {times, jogadores: '', id: {ID: 0, msg: 'Selecione uma sala.'}});
+        res.render('../views/index', {times, jogadores: '', id: {ID: 0, InformarVagas: ''}});
 
     },
 
@@ -16,10 +16,11 @@ module.exports = {
         const ID = req.body.nome;
         const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome'] });
 
-        let msg, jogadores = '';
+        let InformarVagas, jogadores = '';
         if (ID == "")
         {
-            msg = 'Selecione um time.';
+            InformarVagas = 'Selecione um time.';
+
         } 
         else 
         {
@@ -30,12 +31,10 @@ module.exports = {
             });
 
             let max = await time.findByPk(ID, { raw: true, attributes: ['Capacidade'] });
-            msg = `Vagas para esse time: ${max.Capacidade - jogadores.length}`;
-
-            
+            InformarVagas = `Vagas para esse time: ${max.Capacidade - jogadores.length}`;
         };
 
-        const id = { ID, msg };
+        const id = { ID, InformarVagas: InformarVagas };
         res.render('../views/index', {times, jogadores, id});
 
     }

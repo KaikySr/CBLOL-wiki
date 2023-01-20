@@ -72,23 +72,26 @@
 
                         <select style="width: 100%;" id="inputTime" class="form-select" name="time" >
                             <% for (let i=0; i<todosTimes.length; i++) { %>
-                            <option value='<%= todosTimes[i].IDTime %>' <%= jogadores.IDTime == todosTimes[i].IDTime ?  'selected' : ''%>> <%= todosTimes[i].Nome %> </option>
+                                <option value='<%= todosTimes[i].IDTime %>' <%= jogadores.IDTime == todosTimes[i].IDTime ?  'selected' : ''%>> <%= todosTimes[i].Nome %> </option>
                             <% } %>
                         </select>
                     </div>
 
-                    <button class="botao_liquido" type="submit" id="submit">
-                        <a href="#">
-                            <span>Atualizar</span>
-                            <div class="liquid"></div>
-                        </a>
-                    </button>
-                    <button class="botao_liquido" type="submit" id="excluir" value="Excluir">
-                        <a href="#">
-                            <span>Excluir</span>
-                            <div class="liquid"></div>
-                        </a>
-                    </button>
+                    <div class="botoes">
+                        <button class="botao_liquido" type="submit" name="botao" id="submit" value="Submit">
+                            <a href="#">
+                                <span>Atualizar</span>
+                                <div class="liquid"></div>
+                            </a>
+                        </button>
+                        
+                        <button class="botao_liquido" type="submit" name="botao" id="excluir" value="Excluir">
+                            <a href="#">
+                                <span>Excluir</span>
+                                <div class="liquid"></div>
+                            </a>
+                        </button>
+                    </div>
             </form>
         </div>
         </div>

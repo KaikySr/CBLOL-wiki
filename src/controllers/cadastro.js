@@ -24,7 +24,7 @@ module.exports = {
 
         const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome'] });
 
-        const quantJogadores = await jogador.findAll({
+        const qntJogadores = await jogador.findAll({
             raw: true,
             group: ['IDTime'],
             attributes: ['IDTime', [Sequelize.fn('count', Sequelize.col('IDTime')), 'Qnt'] ]
@@ -32,11 +32,11 @@ module.exports = {
     
         let todosTimes = [];
             for (let i=0; i<times.length; i++ ) {
-                for (let j=0; j<quantJogadores.length; j++ )
+                for (let j=0; j<qntJogadores.length; j++ )
                 {
-                    if (times[i].IDTime == quantJogadores[j].IDTime) 
+                    if (times[i].IDTime == qntJogadores[j].IDTime) 
                     {
-                        times[i].Capacidade -= quantJogadores[j].Qnt;
+                        times[i].Capacidade -= qntJogadores[j].Qnt;
                     }
                 }
 

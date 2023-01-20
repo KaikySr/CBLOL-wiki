@@ -17,13 +17,13 @@ module.exports = {
 
         const times = await time.findAll({ raw: true, attributes: ['IDTime', 'Nome', 'Capacidade'] });
 
-        const quantJogadores = await jogador.findAll({raw: true, group: ['IDTime'], attributes: ['IDTime', [Sequelize.fn('count', Sequelize.col('IDTime')), 'Qnt'] ]});
+        const qntJogadores = await jogador.findAll({raw: true, group: ['IDTime'], attributes: ['IDTime', [Sequelize.fn('count', Sequelize.col('IDTime')), 'Qnt'] ]});
 
         let todosTimes = [];
         for (let i=0; i<times.length; i++ ) {
-            for (let j=0; j<quantJogadores.length; j++ ){
-                if (times[i].IDSala == quantJogadores[j].IDTime) {
-                    times[i].Capacidade -= quantJogadores[j].Qnt;
+            for (let j=0; j<qntJogadores.length; j++ ){
+                if (times[i].IDSala == qntJogadores[j].IDTime) {
+                    times[i].Capacidade -= qntJogadores[j].Qnt;
                 }
             }
             if (times[i].Capacidade!=0 || times[i].IDTime==jogadores.IDTime){
@@ -92,7 +92,7 @@ module.exports = {
         const id = req.params.id;
         const dados = req.body;
 
-        if (dados.envio == 'Excluir') {
+        if (dados.botao == 'Excluir') {
 
             const jogadores = await jogador.findAll({ raw: true, attributes: ['IDJogador', 'Foto'], where: { IDTime: id } });
 
